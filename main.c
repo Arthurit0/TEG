@@ -22,8 +22,8 @@ void menu()
     printf("12 - Verificar a existencia de passeio.\n");
     printf("13 - Remover aresta.\n");
     printf("14 - Remover vertice.\n");
-    printf("17 - Sair.\n");
-    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n ");
+    printf("15 - Sair.\n");
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
     printf("Digite a opcao desejada: ");
 }
 
@@ -49,6 +49,7 @@ void laco(int **M, int v){
     if(ver == 0){
         printf("\nNão possui laços!\n");
     }
+    printf("\n");
 }
 
 int arestas_total(int **M, int v, int arestas)
@@ -75,6 +76,7 @@ void imprime_arestas(){
 
       printf("v%d -> v%d\n",i, j);
     }
+    printf("\n");
 }
 
 void arestas_multiplas(int **M, int v){
@@ -237,6 +239,13 @@ void passeio(int **M, int opt_v, int k, int v, int ant){
     }
 }
 
+void system_pause(){
+    char continuar;
+    printf("Pressione Enter para continuar...");
+    getchar();
+    scanf("%c", &continuar);
+}
+
 int main()
 {
     int i, j, v, arestas=0, opcao=0, opt_v, k;
@@ -294,20 +303,22 @@ int main()
         {
 
         case 1:
-            printf("Numero de vertices: %d\n", v);
+            printf("- Numero de vertices: %d\n", v);
 
-            printf("Numero de arestas total: %d\n",arestas);
-            printf("As arestas sao:\n");
+            printf("- Numero de arestas total: %d\n",arestas);
+            printf("\n- As arestas sao:\n");
             imprime_arestas();
-            // system("pause");
+            system_pause();
             break;
         case 2:
             printf("O Grafo\n");
             laco(M, v);
+            system_pause();
             break;
         case 3:
             printf("O Grafo\n");
             arestas_multiplas(M, v);
+            system_pause();
             break;
         case 4:
             system("clear");
@@ -322,27 +333,34 @@ int main()
             }while((opt_v < 0) || (opt_v > v));
 
             grau_do_vertice(M, v, opt_v);
+            system_pause();
             break;
         case 5:
             system("clear");
             somatorio_dos_vertices(M, v);
+            system_pause();
             break;
         case 6:
             isolaaadoo(M,v);
+            system_pause();
             break;
         case 7:
             break;
         case 8:
             grau_impar_par(M,v);
+            system_pause();
             break;
         case 9:
             grafo_simples(M,v);
+            system_pause();
             break;
         case 10:
             grafo_completo(M,v);
+            system_pause();
             break;
         case 11:
             grafo_regular(M,v);
+            system_pause();
             break;
         case 12:
             system("clear");
@@ -360,6 +378,7 @@ int main()
 
             if(k <= arestas && arestas > 0) passeio(M, opt_v-1, k, v, -1);
             else printf("O numero de passos eh maior que o numero de arestas");
+            system_pause();
 
             break;
         case 13:
@@ -367,14 +386,11 @@ int main()
         case 14:
             break;
         case 15:
-            break;
-        case 16:
-            break;
-        case 17:
-            break;
+            return 0;
 
         default:
             printf("\nOpcao invalida. Digite novamente a opcao desejada.\n");
+            system_pause();
             system("cls"); // Ubuntu: system("clear")
         }
 
@@ -441,13 +457,3 @@ int main()
 
     return 0;
 }
-
-// int numer_aresta_max()
-// {
-// }
-// void grau_total()
-// {
-// }
-// int vertice_grau_impar()
-// {
-// }
