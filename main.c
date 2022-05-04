@@ -299,18 +299,20 @@ int main()
             printf("Numero de arestas total: %d\n",arestas);
             printf("As arestas sao:\n");
             imprime_arestas();
-            // system("pause");
+            system("pause");
             break;
         case 2:
             printf("O Grafo\n");
             laco(M, v);
+            system("pause");
             break;
         case 3:
             printf("O Grafo\n");
             arestas_multiplas(M, v);
+            system("pause");
             break;
         case 4:
-            system("clear");
+            system("cls");
             do{
                 printf("Qual dos %d vertices você deseja ver? ", v);
                 scanf("%d",&opt_v);
@@ -322,30 +324,37 @@ int main()
             }while((opt_v < 0) || (opt_v > v));
 
             grau_do_vertice(M, v, opt_v);
+            system("pause");
             break;
         case 5:
-            system("clear");
+            system("cls");
             somatorio_dos_vertices(M, v);
+            system("pause");
             break;
         case 6:
             isolaaadoo(M,v);
+            system("pause");
             break;
         case 7:
             break;
         case 8:
             grau_impar_par(M,v);
+            system("pause");
             break;
         case 9:
             grafo_simples(M,v);
+            system("pause");
             break;
         case 10:
             grafo_completo(M,v);
+            system("pause");
             break;
         case 11:
             grafo_regular(M,v);
+            system("pause");
             break;
         case 12:
-            system("clear");
+            system("cls");
             do{
                 printf("Em qual vertice voce quer iniciar o passeio? ");
                 scanf("%d",&opt_v);
@@ -360,18 +369,14 @@ int main()
 
             if(k <= arestas && arestas > 0) passeio(M, opt_v-1, k, v, -1);
             else printf("O numero de passos eh maior que o numero de arestas");
-
+            system("pause");
             break;
         case 13:
             break;
         case 14:
             break;
         case 15:
-            break;
-        case 16:
-            break;
-        case 17:
-            break;
+            return 0;
 
         default:
             printf("\nOpcao invalida. Digite novamente a opcao desejada.\n");
