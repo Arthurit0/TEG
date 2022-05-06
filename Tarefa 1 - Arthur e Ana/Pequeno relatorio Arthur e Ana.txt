@@ -1,0 +1,38 @@
+
+Tarefa 1 - Teoria dos Grafos.
+
+Nomes: Arthur José Budal da Silva e Ana Clara Barbosa dos Santos.
+Ambiente : Primeiramente no Windows, usando o VScode e o gcc, depois mudando para o Linux, também com o VScode e o gcc.
+
+*Sobre o código, inicialmente temos um menu, cada opção digitada pela usuário chama uma função na main;
+*Existem funções que parecem duplicadas,porém uma faz algo a mais que outra;
+*Também escolhemos manter o print dentro de algumas funções(mesmo não sendo considerado uma boa prática), pois percebemos que ficaria muito confuso se nao fizessemos isso,
+assim o codigo ficou mais simples de compreender, principalmente porque é o primeiro código que fazemos nessa disciplina, fica mais fácil pra nós e pra o professor.
+*Não colocamos as funções em um arquivo e a main em outro, pois o fato das funções terem printf quebra o conceito de encapsulamento.
+*A opção sair do programa faz o salvamento do arquivo final.
+
+
+Discussão sobre a Exclusão de um vértice:
+
+Em uma Matriz de adjacência a exclusão de um vértice implicaria na exclusão da linha e coluna que representa o mesmo, isso causaria uma inconsistência na matriz pois suas linhas e colunas ficariam desordenadas
+Exemplo: 
+
+Exclusão do vértice 3:
+0 1 2 4 5 6 // essas seriam as colunas da matriz após a exclusão sem tratamento.
+
+
+A primeira solução que pensamos seria deslocar todas as outras posições e manter a ordem, como:
+0 1 2 3 4 5
+
+Porém essa solução implicaria em ilusão de que o vértice 3 não foi excluído, pois ao printar a matriz ele continua ali, porém ele não o 3 e sim o 4.
+
+Conclusão: Essa solução é confusa e inconsistente.
+
+
+Outras soluções que pensamos:
+
+*Atrelar cada vertice a uma struct que identificasse o vértice e então a posição dele seria um atributo e não a identificação dele.
+
+*Também pensamos em fazer a matriz com uma lista encadeada de listas encadeadas, que de certa forma também implica em ter structs identificadoras.
+
+ 
