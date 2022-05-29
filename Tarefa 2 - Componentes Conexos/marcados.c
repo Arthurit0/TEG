@@ -4,64 +4,61 @@
 
 FILE *arq;
 FILE *file;
-
-int *neighbours(int **IM_binaria, int i, int j)
+typedef struct
 {
-    // Aloca espaços
-    int Viz_4 = malloc(4 * sizeof(int *));
-    for (int k = 0; k < 2; k++)
+    int i;
+    int j;
+} Vizinho;
+
+Vizinho *neighbours(int **IM_binaria, int i, int j)
+{
+    Vizinho *Viz_4 = malloc(sizeof(Vizinho) * 4);
+
+    Viz_4[0].i = i - 1;
+    Viz_4[0].j = j;
+
+    Viz_4[1].i = i;
+    Viz_4[1].j = j + 1;
+
+    Viz_4[2].i = i + 1;
+    Viz_4[2].j = j;
+
+    Viz_4[3].i = i;
+    Viz_4[3].j = j - 1;
+
+    printf("\n- Dentro da funcao neighbours:\n");
+    for (int k = 0; k < 4; k++)
     {
-        Viz_4[k] = malloc(2 * sizeof(int));
+        printf("\nViz %d: [%d] [%d]", k, Viz_4[k].i, Viz_4[k].j);
     }
 
-    Viz_4[1][1] = i - 1;
-    Viz_4[1][2] = j;
-
-    Viz_4[2][1] = i;
-    Viz_4[2][2] = j + 1;
-
-    Viz_4[3][1] = i + 1;
-    Viz_4[3][2] = j;
-
-    Viz_4[4][1] = i;
-    Viz_4[4][2] = j - 1;
-
-    // *Viz_4 = [i-1, j];
-    // *(Viz_4 + 1) = ;
-    // *(Viz_4 + 2) = IM_binaria[i + 1][j];
-    // *(Viz_4 + 3) = IM_binaria[i][j - 1];
-
-    // for (int k = 0; k < 4; k++)
-    // {
-    //     printf("%d ", *(Viz_4 + k));
-    // }
+    printf("\n");
 
     return Viz_4;
 }
-
 void pesquisa(int **IM_binaria, int **marcados, int i, int j)
 {
     marcados[i][j] = 1;
-    int l_linha, c_linha;
+    Vizinho *Viz_4 = neighbours(IM_binaria, i, j);
 
-    int *Viz_4 = neighbours(IM_binaria, i, j);
+    printf("\n- Dentro da funcao pesquisa:\n");
 
     for (int k = 0; k < 4; k++)
     {
-        l_linha = Viz_4[k][1];
-        c_linha = Viz_4[k][2] if (IM_binaria[l_l][Viz_4[k][2]] == 1 && marcados[Viz_4[k][1]][Viz_4[k][2]] == 0)
-        {
-            pesquisa(IM_binaria, marcados, Viz_4[k][1], Viz_4[k][2])
-        }
+        printf("\nViz %d: [%d] [%d]", k, Viz_4[k].i, Viz_4[k].j);
     }
 
-    // each(i ',j')
-    //         in Viz_4 if (IM_binaria[L',C'] == 1 && Marcados[L’, C’] == 0)
-    //             search(IM_binaria, Marcados, L',C');
-}
+    printf("\n");
 
-void findComponents(int **IM_binaria, int **marcados, int num_lin, int num_col, int cont)
+    for (int k = 0; k < 4; k++)
+    {
+        if (IM_binaria[Viz_4[k].i][Viz_4[k].j] == 1 && marcados[Viz_4[k].i][Viz_4[k].j] == 0)
+            pesquisa(IM_binaria, marcados, Viz_4[k].i, Viz_4[k].j);
+    }
+}
+void findComponents(int **IM_binaria, int **marcados, int num_lin, int num_col, int *cont)
 {
+
     int i, j;
     for (i = 0; i < (num_lin)-1; i++)
     {
@@ -69,8 +66,10 @@ void findComponents(int **IM_binaria, int **marcados, int num_lin, int num_col, 
         {
             if (IM_binaria[i][j] == 1 && marcados[i][j] == 0)
             {
+
                 pesquisa(IM_binaria, marcados, i, j);
-                cont++;
+                *cont = *cont + 1;
+                printf("\n=> Cont esta em %d\n", *cont);
             }
         }
     }
@@ -93,16 +92,8 @@ void func(int **IM_binaria, int num_lin, int num_col)
             marcados[i][j] = 0;
         }
     }
-    // for (i = 0; i < num_lin; i++)
-    // {
-    //     for (j = 0; j < num_col; j++)
-    //     {
-    //         printf("%d ", marcados[i][j]);
-    //     }
-    //     printf("\n");
-    //}
 
-    findComponents(IM_binaria, marcados, num_lin, num_col, cont);
+    findComponents(IM_binaria, marcados, num_lin, num_col, &cont);
 
     printf("\nQuantidade de componentes conexos: %d\n", cont);
 }
@@ -120,8 +111,8 @@ int main()
     }
     num_col = ((strlen(linha) / 2));
 
-    printf("lin :%d\n", num_lin);
-    printf("col :%d\n", num_col);
+    printf("Linhas: %d\n", num_lin);
+    printf("Colunas: %d\n", num_col);
 
     M = malloc(num_lin * sizeof(int *));
 
@@ -147,6 +138,8 @@ int main()
         }
     }
 
+    printf("\n");
+
     for (i = 0; i < num_lin; i++)
     {
         for (j = 0; j < num_col; j++)
@@ -156,10 +149,13 @@ int main()
         printf("\n");
     }
 
-    printf("\n");
     func(M, num_lin, num_col);
+    printf("\nDar o free\n");
 
     for (i = 0; i < num_lin; i++)
         free(M[i]);
     free(M);
+    printf("\nFeito!");
+
+    return 0;
 }
