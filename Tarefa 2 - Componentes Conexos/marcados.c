@@ -5,14 +5,12 @@
 FILE *arq;
 FILE *file;
 int op;
-typedef struct
-{
+typedef struct {
     int i;
     int j;
 } Vizinho;
 
-Vizinho *neighbours4(int **IM_binaria, int i, int j)
-{
+Vizinho *neighbours4(int **IM_binaria, int i, int j) {
     Vizinho *Viz_4 = malloc(sizeof(Vizinho) * 4);
 
     Viz_4[0].i = i - 1;
@@ -38,8 +36,7 @@ Vizinho *neighbours4(int **IM_binaria, int i, int j)
     return Viz_4;
 }
 
-Vizinho *neighbours8(int **IM_binaria, int i, int j)
-{
+Vizinho *neighbours8(int **IM_binaria, int i, int j) {
     Vizinho *Viz_8 = malloc(sizeof(Vizinho) * 8);
 
     Viz_8[0].i = i - 1;
@@ -76,42 +73,33 @@ Vizinho *neighbours8(int **IM_binaria, int i, int j)
 
     return Viz_8;
 }
-void pesquisa(int **IM_binaria, int **marcados, int i, int j)
-{
+void pesquisa(int **IM_binaria, int **marcados, int i, int j) {
     marcados[i][j] = 1;
-    if (op == 4)
-    {
+    if (op == 4) {
         Vizinho *Viz_4 = neighbours4(IM_binaria, i, j);
 
-        for (int k = 0; k < 4; k++)
-        {
-            if (IM_binaria[Viz_4[k].i][Viz_4[k].j] == 1 && marcados[Viz_4[k].i][Viz_4[k].j] == 0)
+        for (int k = 0; k < 4; k++) {
+            if (IM_binaria[Viz_4[k].i][Viz_4[k].j] == 1 &&
+                marcados[Viz_4[k].i][Viz_4[k].j] == 0)
                 pesquisa(IM_binaria, marcados, Viz_4[k].i, Viz_4[k].j);
         }
-    }
-    else
-    {
+    } else {
         Vizinho *Viz_8 = neighbours8(IM_binaria, i, j);
 
-        for (int k = 0; k < 8; k++)
-        {
-            if (IM_binaria[Viz_8[k].i][Viz_8[k].j] == 1 && marcados[Viz_8[k].i][Viz_8[k].j] == 0)
+        for (int k = 0; k < 8; k++) {
+            if (IM_binaria[Viz_8[k].i][Viz_8[k].j] == 1 &&
+                marcados[Viz_8[k].i][Viz_8[k].j] == 0)
                 pesquisa(IM_binaria, marcados, Viz_8[k].i, Viz_8[k].j);
         }
     }
 }
 
-void findComponents(int **IM_binaria, int **marcados, int num_lin, int num_col, int *cont)
-{
-
+void findComponents(int **IM_binaria, int **marcados, int num_lin, int num_col,
+                    int *cont) {
     int i, j;
-    for (i = 0; i < (num_lin)-1; i++)
-    {
-        for (j = 0; j < (num_col)-1; j++)
-        {
-            if (IM_binaria[i][j] == 1 && marcados[i][j] == 0)
-            {
-
+    for (i = 0; i < (num_lin)-1; i++) {
+        for (j = 0; j < (num_col)-1; j++) {
+            if (IM_binaria[i][j] == 1 && marcados[i][j] == 0) {
                 pesquisa(IM_binaria, marcados, i, j);
                 *cont = *cont + 1;
                 // printf("\n=> Cont esta em %d\n", *cont);
@@ -120,20 +108,15 @@ void findComponents(int **IM_binaria, int **marcados, int num_lin, int num_col, 
     }
 }
 
-void func(int **IM_binaria, int num_lin, int num_col)
-{
-
+void func(int **IM_binaria, int num_lin, int num_col) {
     int cont = 0, i, j, **marcados;
 
     marcados = malloc(num_lin * sizeof(int *));
-    for (i = 0; i < num_lin; i++)
-    {
+    for (i = 0; i < num_lin; i++) {
         marcados[i] = malloc(num_col * sizeof(int));
     }
-    for (i = 0; i < num_lin; i++)
-    {
-        for (j = 0; j < num_col; j++)
-        {
+    for (i = 0; i < num_lin; i++) {
+        for (j = 0; j < num_col; j++) {
             marcados[i][j] = 0;
         }
     }
@@ -144,27 +127,23 @@ void func(int **IM_binaria, int num_lin, int num_col)
 
     printf("\nMatriz de marcados:\n");
 
-    for (i = 0; i < num_lin; i++)
-    {
-        for (j = 0; j < num_col; j++)
-        {
+    for (i = 0; i < num_lin; i++) {
+        for (j = 0; j < num_col; j++) {
             printf("%d ", marcados[i][j]);
         }
         printf("\n");
     }
 
-    printf("\nQuantidade de componentes conexos com %d vizinhos: %d\n", op, cont);
+    printf("\nQuantidade de componentes conexos com %d vizinhos: %d\n", op,
+           cont);
 }
 
-int main()
-{
-
+int main() {
     int i = 0, j = 0, cont = 0, num_lin = 0, num_col = 0, **M, x;
     char *linha;
 
     arq = fopen("im_binaria.txt", "r");
-    while (fgets(linha, 1000, arq) != NULL)
-    {
+    while (fgets(linha, 1000, arq) != NULL) {
         num_lin++;
     }
     num_col = ((strlen(linha) / 2));
@@ -174,8 +153,7 @@ int main()
 
     M = malloc(num_lin * sizeof(int *));
 
-    for (i = 0; i < num_lin; i++)
-    {
+    for (i = 0; i < num_lin; i++) {
         M[i] = malloc(num_col * sizeof(int));
     }
 
@@ -185,12 +163,9 @@ int main()
     char Linha[100];
     char *result;
 
-    while (!feof(arq))
-    {
-        for (i = 0; i < num_lin; i++)
-        {
-            for (j = 0; j < num_col; j++)
-            {
+    while (!feof(arq)) {
+        for (i = 0; i < num_lin; i++) {
+            for (j = 0; j < num_col; j++) {
                 fscanf(arq, "%d", &M[i][j]);
             }
         }
@@ -198,18 +173,17 @@ int main()
 
     printf("\n");
     printf("Matriz original:\n");
-    for (i = 0; i < num_lin; i++)
-    {
-        for (j = 0; j < num_col; j++)
-        {
+    for (i = 0; i < num_lin; i++) {
+        for (j = 0; j < num_col; j++) {
             printf("%d ", M[i][j]);
         }
         printf("\n");
     }
 
-    do
-    {
-        printf("\nVoce gostaria de contar os 4 ou 8 vizinhos de cada componente?\n");
+    do {
+        printf(
+            "\nVoce gostaria de contar os 4 ou 8 vizinhos de cada "
+            "componente?\n");
         scanf("%d", &op);
     } while (op != 4 && op != 8);
 
@@ -217,8 +191,7 @@ int main()
 
     printf("\nDar o free\n");
 
-    for (i = 0; i < num_lin; i++)
-        free(M[i]);
+    for (i = 0; i < num_lin; i++) free(M[i]);
     free(M);
     printf("\nFeito!");
 
