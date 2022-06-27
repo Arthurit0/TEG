@@ -1,2 +1,2 @@
 # TEG
- Trabalhos e Tarefas de TEG serão armazenados aqui
+Tarefas, listas e trabalhos de TEG serão armazenados aqui.
